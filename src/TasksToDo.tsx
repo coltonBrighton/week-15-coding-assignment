@@ -33,7 +33,7 @@ export default function TasksToDo({
   return (
     <Col style={{ backgroundColor: bgColor }}>
       <h4 className="display-5 text-center my-5">Tasks To Do:</h4>
-      <Stack gap={3}>
+      <Stack className="mb-5" gap={3}>
         {taskArray.map((task, index) => (
           <Card
             key={index}
