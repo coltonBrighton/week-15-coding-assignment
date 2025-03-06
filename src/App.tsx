@@ -9,10 +9,10 @@ import AddTaskBar from "./AddTaskBar";
 
 export default function App() {
   // Use useState to manage taskArray state
-  const [tasks, setTasks] = useState<{ id: number; task: string }[]>(taskArray);
+  const [tasks, setTasks] = useState<{ id: number; task: string, completed:boolean }[]>(taskArray);
 
   // Using useState to manage completedTaskArray state
-  const [completeTask, setCompleteTask] = useState<{ id: number; task: string }[]>(completedTaskArray)
+  const [completeTask, setCompleteTask] = useState<{ id: number; task: string, completed:boolean}[]>(completedTaskArray)
 
   const width = 18;
 
@@ -32,7 +32,7 @@ export default function App() {
       task: "Vacuum Living Room",
     };
     // update state for tasks
-    setTasks([...tasks, newTask]);
+    setTasks([...tasks, {...newTask, completed: false}]);
   };
 
   // editTask on button click
@@ -53,12 +53,21 @@ export default function App() {
     // find task to move to completedTaskArray
     const taskToComplete = tasks.find((task) => task.id === taskId)
     if (taskToComplete) {
-      // remove task from taskArray
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    //update tasks new state
-    setTasks(updatedTasks)
-    // add task to completedTaskArray
-    setCompleteTask([...completeTask, taskToComplete])
+      // update the task to toglle completed state
+      const updatedTasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      );
+      //update tasks new state
+      setTasks(updatedTasks)
+      if (!taskToComplete.completed) {
+        // remove completed task from tasksArray
+        const updatedTaskList = updatedTasks.filter(task => task.id !== taskId);
+        setTasks(updatedTaskList)
+        setCompleteTask(prevCompletedTasks => [...prevCompletedTasks,  {...taskToComplete, completed: true }])
+        // add task to completedTaskArray
+        //update tasks new state
+        setCompleteTask([...completeTask, {...taskToComplete, completed:true}])
+      }
     }
   }
 
@@ -72,8 +81,8 @@ export default function App() {
   // got rid of Sidebar component in favor of an addTaskbar component
   return (
     <div>
+      <Row className="bg-dark vw-100">
       <Navbar />
-      <Row className="bg-dark">
         <AddTaskBar
           addTask={ addTask }
         />

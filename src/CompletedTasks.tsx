@@ -4,7 +4,8 @@ import { Col, Stack, Card, Form, Button } from "react-bootstrap";
 // type for completedTask object in completedTaskArray
 type completedTask = {
   id: number,
-  task: string
+  task: string,
+  completed: boolean
 }
 // giving my prop deleteCompletedTask and completedTaskArray their respective type
 type Props = {
@@ -22,7 +23,7 @@ export default function CompletedTasks({
   textColor,
   bgColor,
   completedTaskArray,
-  deleteCompletedTask,
+  deleteCompletedTask
 }: Props) {
   return (
     <Col md className="vh-100" style={{ backgroundColor: bgColor }}>
@@ -57,7 +58,7 @@ export default function CompletedTasks({
           </Card.Body>
         </Card>
         ))}
-        
+ 
       </Stack>
     </Col>
   );

@@ -6,6 +6,7 @@ import { Col, Stack, Card, Form, Button} from "react-bootstrap"
 type Task = {
   id: number,
   task: string
+  completed: boolean
 }
 // giving my props addTask, deleteTask, editTask, and MarkComplete their respective types
 type Props = {
@@ -50,6 +51,7 @@ export default function TasksToDo({
                   style={{ color: textColor }}
                   type="checkbox"
                   label={ <span>{task.task}</span> }
+                  checked={task.completed}
                   onClick={ () => markComplete(task.id) }
                 />
               </Form>

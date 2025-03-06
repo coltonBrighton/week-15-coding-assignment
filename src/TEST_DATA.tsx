@@ -3,19 +3,23 @@
 export const taskArray = [
     {
         id: 1,
-        task: "Clean Bathroom"
+        task: "Clean Bathroom",
+        completed: false
     },
     {
         id: 2,
-        task: "Feed Dogs"
+        task: "Feed Dogs",
+        completed: false
     },
     {
         id: 3,
-        task: "Go For A Walk"
+        task: "Go For A Walk",
+        completed: false
     },
     {
         id: 4,
-        task: "Clean Hamster Cage"
+        task: "Clean Hamster Cage",
+        completed: false
     }
 ]
 
@@ -23,10 +27,12 @@ export const taskArray = [
 export let completedTaskArray = [
     {
         id: 1,
-        task: "Mop Floor"
+        task: "Mop Floor",
+        completed: true
     },
     {
         id: 2,
-        task: "Do Dishes"
+        task: "Do Dishes",
+        completed: true
     }
 ]
