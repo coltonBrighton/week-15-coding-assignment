@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack } from "react-bootstrap";
 
 type Props = {
@@ -29,6 +28,15 @@ export default function Footer({ bgColor }: Props) {
             className="text-light"
           >
             Edit icons created by Kiranshastry - Flaticon
+          </a>
+        </div>
+        <div>
+          <a 
+            href="https://www.flaticon.com/free-icons/add" 
+            title="add icons"
+            className="text-light"
+          >
+            Add icons created by reussy - Flaticon
           </a>
         </div>
       </Stack>

@@ -1,77 +1,100 @@
 import { useState } from "react";
-import { taskArray } from "./TEST_DATA";
+import { completedTaskArray, taskArray } from "./TEST_DATA";
 import CompletedTasks from "./CompletedTasks";
 import Navbar from "./Navbars";
-import Sidebar from "./Sidebar";
 import TasksToDo from "./TasksToDo";
 import Row from "react-bootstrap/Row";
 import Footer from "./Footer";
-
-type eventType= {
-  preventDefault: any;
-  type: string
-  payload?: any
-}
+import AddTaskBar from "./AddTaskBar";
 
 export default function App() {
-  const [isOpen, setIsOpen] = useState(true);
+  // Use useState to manage taskArray state
+  const [tasks, setTasks] = useState<{ id: number; task: string }[]>(taskArray);
 
-  // collapse sidebar
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen);
-  };
+  // Using useState to manage completedTaskArray state
+  const [completeTask, setCompleteTask] = useState<{ id: number; task: string}[]>(completedTaskArray)
+
   // making a width prop for card sizes
   const width = 18;
 
-    // Use useState to manage taskArray state
-    const [tasks, setTasks] = useState(taskArray);
-    // Delete task function
-    const deleteTask = (taskId: number) => {
-      // Filter out the task with the given taskId
-      const updatedTasks = tasks.filter((task) => task.id !== taskId);
-      setTasks(updatedTasks)
-    }
+  // Delete task function
+  const deleteTask = (taskId: number) => {
+    // Filter out the task with the given taskId
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
 
-    const addTask = (e: eventType) => {
-      // Filter out the task with the given taskId
+  // addTask on button click
+  const addTask = () => {
+    // create new task and add it to the array in state
+    const newTask = {
+      id: Math.random(),
+      task: "Vacuum Living Room",
+    };
+    setTasks([...tasks, newTask]);
+  };
 
-      const newTask = {
-        id:Math.random(),
-        task: "blah"
+  // editTask on button click
+  // grap the tasks currently in state then use map to update the task
+  const editTask = (taskId: number) => {
+    setTasks(prevTasks => 
+      prevTasks.map(task => (
+        task.id !== taskId ? 
+        task : {
+        ...task,
+        task: "Clean Fish"
       }
-      e.preventDefault();
-      const updatedTask = [
-        ...tasks,
-       newTask
-      ]
-     
-      setTasks(updatedTask)
+    )));
+  }
+  
+  // mark complete
+  const markComplete = (taskId: number) => {
+    // find task to move to completedTaskArray
+    const taskToComplete = tasks.find((task) => task.id === taskId)
+    if (taskToComplete) {
+      // remove task from taskArray
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    //update tasks new state
+    setTasks(updatedTasks)
+    // add task to completedTaskArray
+    setCompleteTask([...completeTask, taskToComplete])
     }
+  }
+
+  // delete completed task
+  const deleteCompletedTask = (taskId: number) => {
+    // filter out task with given taskId
+    const updateCompletedTasks = completeTask.filter((task) => task.id !== taskId);
+    // update state
+    setCompleteTask(updateCompletedTasks)
+  }
   // create application using compenents Navbar, Sidebar, TasksToDo, and CompletedTasks.
   return (
     <div>
       <Navbar />
-      <Row>
-        <Sidebar 
-          bgColor="teal" 
-          isOpen={ isOpen } 
+      <Row className="bg-dark">
+        <AddTaskBar
           addTask={ addTask }
-          collapse={ toggleCollapse }
         />
-        <TasksToDo 
-          newWidth={width} 
-          textColor="blue" 
-          bgColor="pink"  
-          deleteTask={ deleteTask }
+        <TasksToDo
+          newWidth={width}
+          textColor="blue"
+          bgColor="pink"
+          deleteTask={deleteTask}
           taskArray={ tasks }
+          addTask={ addTask }
+          editTask={ editTask }
+          markComplete={ markComplete }
         />
         <CompletedTasks 
-          newWidth={ width } 
+          newWidth={width} 
           textColor="grey" 
-          bgColor="maroon"
+          bgColor="maroon" 
+          deleteCompletedTask={ deleteCompletedTask }
+          completedTaskArray= { completeTask }
         />
       </Row>
-      <Footer bgColor="green" />
+      <Footer bgColor="black" />
     </div>
   );
 }

@@ -1,42 +1,43 @@
-
-import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import deletePNG from "./assets/delete.png";
 import editPNG from "./assets/edit.png";
+import { Col, Stack, Card, Form, Button} from "react-bootstrap"
 
+type Task = {
+  id: number,
+  task: string
+}
 // giving my props textColor, newWidth, bgColor their respective types
 type Props = {
   textColor: string;
   newWidth: number;
   bgColor: string;
-  taskArray: [{
-    id: number,
-    task: string
-  }]
+  taskArray: Task[];
   addTask: () => void;
   deleteTask: (taskId: number) => void;
+  editTask: (taskId: number) => void;
+  markComplete: (taskId: number) => void;
 };
+
 // use destructuring to grab textColor, newWidth and bgColor then set their type to Props
 export default function TasksToDo({
   textColor,
   newWidth,
   bgColor,
   deleteTask,
-  taskArray
+  taskArray,
+  editTask,
+  markComplete
 }: Props) {
   console.log("TasksToDo", taskArray)
   return (
-    <Col md className="p-0 vh-100" style={{ backgroundColor: bgColor }}>
-      <h4 className="my-3 mx-3">To Do:</h4>
-      <Stack>
+    <Col style={{ backgroundColor: bgColor }}>
+      <h4 className="display-5 text-center my-5">Tasks To Do:</h4>
+      <Stack gap={3}>
         {taskArray.map((task, index) => (
           <Card
-          key={index}
-          className="shadow-md mx-auto mb-3"
-          style={{ width: newWidth + "rem" }}
+            key={index}
+            className="mx-auto shadow border-0"
+            style={{ width: newWidth + "rem" }}
         >
           <Card.Body className="bg-light">
             <Stack
@@ -47,10 +48,14 @@ export default function TasksToDo({
                 <Form.Check
                   style={{ color: textColor }}
                   type="checkbox"
-                  label={ task.task }
+                  label={ <span>{task.task}</span> }
+                  onClick={ () => markComplete(task.id) }
                 />
               </Form>
-              <Button variant="outline-light">
+              <Button 
+                variant="outline-light"
+                onClick={() => editTask(task.id)}
+                >
                 <img src={editPNG} alt="Edit" />
               </Button>
               <Button 

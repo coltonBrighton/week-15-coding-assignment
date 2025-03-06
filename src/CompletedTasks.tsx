@@ -1,14 +1,18 @@
-import { completedTaskArray } from "./TEST_DATA";
-import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
+import deletePNG from "./assets/delete.png";
+import { Col, Stack, Card, Form, Button } from "react-bootstrap";
 
+// type for task
+type completedTask = {
+  id: number,
+  task: string
+}
 // giving my props textColor, newWidth, bgColor their respective types
 type Props = {
   newWidth: number;
   textColor: string;
   bgColor: string;
+  completedTaskArray: completedTask[];
+  deleteCompletedTask: (taskId: number) => void;
 };
 
 // use destructuring to grab textColor, newWidth and bgColor then set their type to Props
@@ -16,48 +20,44 @@ export default function CompletedTasks({
   newWidth,
   textColor,
   bgColor,
+  completedTaskArray,
+  deleteCompletedTask,
 }: Props) {
   return (
-    <Col md className="p-0 vh-100" style={{ backgroundColor: bgColor }}>
-        <h4 className="my-3 mx-3 text-light">Completed Tasks:</h4>
+    <Col md className="vh-100" style={{ backgroundColor: bgColor }}>
+        <h4 className="display-5 text-center my-5 text-light">Completed Tasks:</h4>
         <Stack gap={3}>
+        {completedTaskArray.map((task, index) => (
           <Card
-            className="shadow-md mx-auto"
+            key={index}
+            className="mx-auto shadow border-0"
             style={{ width: newWidth + "rem" }}
-          >
-            <Card.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Check.Input type="checkbox" checked />
-                  <Form.Check.Label
-                    className="text-decoration-line-through mx-2"
-                    style={{ textDecorationColor: textColor }}
-                  >
-                    {completedTaskArray[0].task}
-                  </Form.Check.Label>
-                </Form.Group>
+        >
+          <Card.Body className="bg-light">
+            <Stack
+              direction="horizontal"
+              className="d-flex justify-content-center"
+            >
+              <Form className="w-100">
+                <Form.Check
+                  style={{ color: textColor }}
+                  type="checkbox"
+                  label={ <span className="text-decoration-line-through">{task.task}</span> }
+                  checked
+                />
               </Form>
-            </Card.Body>
-          </Card>
-          <Card
-            className="shadow-md mx-auto"
-            style={{ width: newWidth + "rem" }}
-          >
-            <Card.Body>
-              <Form>
-                <Form.Group>
-                  <Form.Check.Input type="checkbox" checked />
-                  <Form.Check.Label
-                    className="text-decoration-line-through mx-2"
-                    style={{ textDecorationColor: textColor }}
-                  >
-                    {completedTaskArray[1].task}
-                  </Form.Check.Label>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Stack>
+              <Button 
+                variant="outline-light"
+                onClick={() => deleteCompletedTask(task.id)} // Pass the index to deleteTask
+              >
+                <img src={ deletePNG } alt="Delete" />
+              </Button>
+            </Stack>
+          </Card.Body>
+        </Card>
+        ))}
+        
+      </Stack>
     </Col>
   );
 }

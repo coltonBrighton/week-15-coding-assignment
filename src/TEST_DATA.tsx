@@ -11,7 +11,7 @@ export const taskArray = [
     },
     {
         id: 3,
-        task: "smoke a steak"
+        task: "Go For A Walk"
     },
     {
         id: 4,
