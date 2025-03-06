@@ -6,6 +6,7 @@ type Props = {
     addTask: () => void;
 };
 
+// updated taskbar button to be a plus icon
 export default function AddTaskBar({ addTask }: Props) {
   return (
     <div className="d-flex">

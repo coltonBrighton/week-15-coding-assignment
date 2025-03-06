@@ -1,5 +1,5 @@
 import { Stack } from "react-bootstrap";
-
+// creating a footer for attributing icons
 type Props = {
   bgColor: string;
 };

@@ -1,5 +1,5 @@
 
-// make an array called taskArray to hold some sample data
+// make an array called taskArray to hold some test data
 export const taskArray = [
     {
         id: 1,
@@ -19,7 +19,7 @@ export const taskArray = [
     }
 ]
 
-// create an array called completedTaskArray for sample data
+// create an array called completedTaskArray for some test data
 export let completedTaskArray = [
     {
         id: 1,

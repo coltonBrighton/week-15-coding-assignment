@@ -12,15 +12,15 @@ export default function App() {
   const [tasks, setTasks] = useState<{ id: number; task: string }[]>(taskArray);
 
   // Using useState to manage completedTaskArray state
-  const [completeTask, setCompleteTask] = useState<{ id: number; task: string}[]>(completedTaskArray)
+  const [completeTask, setCompleteTask] = useState<{ id: number; task: string }[]>(completedTaskArray)
 
-  // making a width prop for card sizes
   const width = 18;
 
   // Delete task function
   const deleteTask = (taskId: number) => {
     // Filter out the task with the given taskId
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    // update state for updatedTasks
     setTasks(updatedTasks);
   };
 
@@ -31,18 +31,19 @@ export default function App() {
       id: Math.random(),
       task: "Vacuum Living Room",
     };
+    // update state for tasks
     setTasks([...tasks, newTask]);
   };
 
   // editTask on button click
-  // grap the tasks currently in state then use map to update the task
   const editTask = (taskId: number) => {
+    // grab the tasks currently in state then use map to update the task
     setTasks(prevTasks => 
       prevTasks.map(task => (
         task.id !== taskId ? 
         task : {
         ...task,
-        task: "Clean Fish"
+        task: "Clean Fish Tank"
       }
     )));
   }
@@ -68,7 +69,7 @@ export default function App() {
     // update state
     setCompleteTask(updateCompletedTasks)
   }
-  // create application using compenents Navbar, Sidebar, TasksToDo, and CompletedTasks.
+  // got rid of Sidebar component in favor of an addTaskbar component
   return (
     <div>
       <Navbar />

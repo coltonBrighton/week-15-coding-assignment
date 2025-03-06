@@ -2,11 +2,12 @@ import deletePNG from "./assets/delete.png";
 import editPNG from "./assets/edit.png";
 import { Col, Stack, Card, Form, Button} from "react-bootstrap"
 
+// type for taskArray task objects
 type Task = {
   id: number,
   task: string
 }
-// giving my props textColor, newWidth, bgColor their respective types
+// giving my props addTask, deleteTask, editTask, and MarkComplete their respective types
 type Props = {
   textColor: string;
   newWidth: number;
@@ -18,7 +19,8 @@ type Props = {
   markComplete: (taskId: number) => void;
 };
 
-// use destructuring to grab textColor, newWidth and bgColor then set their type to Props
+// use destructuring to grab deleteTask, editTask, taskArray, and markComplete then set their type to Props
+// added edit and delete buttons
 export default function TasksToDo({
   textColor,
   newWidth,
