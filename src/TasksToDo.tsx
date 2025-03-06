@@ -28,7 +28,6 @@ export default function TasksToDo({
   editTask,
   markComplete
 }: Props) {
-  console.log("TasksToDo", taskArray)
   return (
     <Col style={{ backgroundColor: bgColor }}>
       <h4 className="display-5 text-center my-5">Tasks To Do:</h4>
