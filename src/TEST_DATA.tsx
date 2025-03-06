@@ -26,12 +26,12 @@ export const taskArray = [
 // create an array called completedTaskArray for some test data
 export let completedTaskArray = [
     {
-        id: 1,
+        id: 5,
         task: "Mop Floor",
         completed: true
     },
     {
-        id: 2,
+        id: 6,
         task: "Do Dishes",
         completed: true
     }
